@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { dataMetrics } from '../../utilities/dataMetrics';
+import { DataBaseContext } from '../Store/DataBaseContext';
 
-const SelectDataBase = () => (
-	<select>
-		{dataMetrics.map(({ name }, i) => (
-			<option key={i}>{name}</option>
-		))}
-	</select>
-);
+const SelectDataBase = () => {
+	const value = useContext(DataBaseContext);
 
-export default SelectDataBase
+	console.log(value)
+
+	const selectMetric = ({ target: { value } }) => {
+		const matchingDataBase = dataMetrics.find(({ name }) => value === name);
+		// selectDataBase(matchingDataBase);
+	};
+
+	return (
+		<select onClick={selectMetric}>
+			{dataMetrics.map(({ name }, i) => (
+				<option key={i}>{name}</option>
+			))}
+		</select>
+	);
+};
+
+export default SelectDataBase;
